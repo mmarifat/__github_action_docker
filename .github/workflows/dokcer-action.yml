@@ -19,4 +19,4 @@ jobs:
       with:
         version: '1.26.2'
     - run: |
-        - npm run docker:push
+        npm run docker:push
