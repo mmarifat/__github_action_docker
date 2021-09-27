@@ -43,5 +43,5 @@ jobs:
           docker rm $(docker stop $(docker ps -a -q --filter ancestor=${{secrets.DOCKER_USERNAME}}/${{ env.project_name }} --format="{{.ID}}") || true) || true
           docker system prune -a -f
           docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASS}}
-          docker run -d --pull always --publish 3901:80 ${{secrets.DOCKER_USERNAME}}/${{ env.project_name }}
+          docker run -d --pull always --publish 9888:80 ${{secrets.DOCKER_USERNAME}}/${{ env.project_name }}
           sudo service nginx restart
