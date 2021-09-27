@@ -40,7 +40,7 @@ jobs:
 
     steps:
       - run: |
-          docker rm $(docker stop $(docker ps -a -q --filter ancestor=${{secrets.DOCKER_USERNAME}}/${{ env.project_name }} --format="{{.ID}}"))
+          docker rm $(docker stop $(docker ps -a -q --filter ancestor=${{secrets.DOCKER_USERNAME}}/${{ env.project_name }} --format="{{.ID}}") || true) || true
           docker system prune -a -f
           docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASS}}
           docker run -d --pull always --publish 3901:80 ${{secrets.DOCKER_USERNAME}}/${{ env.project_name }}
