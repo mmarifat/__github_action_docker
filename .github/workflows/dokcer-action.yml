@@ -18,6 +18,5 @@ jobs:
     - uses: KengoTODA/actions-setup-docker-compose@main
       with:
         version: '1.26.2'
-    - uses: borales/actions-yarn@v2.3.0
-      with:
-        cmd: docker:push
+      run: |
+        - npm run docker:push
