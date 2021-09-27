@@ -29,3 +29,18 @@ jobs:
         docker-compose up -d --build --remove-orphans -V
         docker commit $(docker ps -a -q --filter ancestor=${{ env.project_name }} --format="{{.ID}}") ${{secrets.DOCKER_USERNAME}}/${{ env.project_name }}
         docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASS}}  && docker push ${{secrets.DOCKER_USERNAME}}/${{ env.project_name }}
+
+  docker-pull:
+    runs-on: self-hosted
+
+    # set the project name
+    env:
+      project_name: github-action-demo
+
+    steps:
+      - run: |
+          docker rm $(docker stop $(docker ps -a -q --filter ancestor=${{secrets.DOCKER_USERNAME}}/${{ env.project_name }} --format="{{.ID}}"))
+          docker system prune -a -f
+          docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASS}}
+          docker run -d --pull always --publish 3901:80 ${{secrets.DOCKER_USERNAME}}/${{ env.project_name }}
+          sudo service nginx restart
