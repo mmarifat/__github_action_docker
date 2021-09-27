@@ -31,6 +31,7 @@ jobs:
         docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASS}}  && docker push ${{secrets.DOCKER_USERNAME}}/${{ env.project_name }}
 
   docker-pull:
+    needs: docker-push
     runs-on: self-hosted
 
     # set the project name
