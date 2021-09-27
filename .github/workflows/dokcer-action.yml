@@ -10,7 +10,7 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  docker-push:
     runs-on: ubuntu-20.04
 
     # set the project name
