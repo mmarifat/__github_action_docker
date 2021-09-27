@@ -1,4 +1,4 @@
-# This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
 name: SPA mode in docker hub
@@ -13,6 +13,10 @@ jobs:
   build:
     runs-on: ubuntu-20.04
 
+    # set the project name
+    env:
+      project_name: github-action-demo
+
     steps:
     # clone the repo
     - uses: actions/checkout@v2
@@ -23,5 +27,5 @@ jobs:
     # push it to docker hub
     - run: |
         docker-compose up -d --build --remove-orphans -V
-        docker commit $(docker ps -a -q --filter ancestor=${{ github.repository.name }} --format="{{.ID}}") ${{secrets.DOCKER_USERNAME}}/${{ github.repository.name }}
-        docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASS}}  && docker push ${{secrets.DOCKER_USERNAME}}/${{ github.repository.name }}
+        docker commit $(docker ps -a -q --filter ancestor=${{ env.project_name }} --format="{{.ID}}") ${{secrets.DOCKER_USERNAME}}/${{ env.project_name }}
+        docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASS}}  && docker push ${{secrets.DOCKER_USERNAME}}/${{ env.project_name }}
