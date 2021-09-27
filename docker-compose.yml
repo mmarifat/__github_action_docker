@@ -1,0 +1,12 @@
+version: "3.7"
+
+services:
+  production:
+    container_name: github-action-demo
+    image: 'github-action-demo'
+    build:
+      context: .
+      target: production
+      dockerfile: ./Dockerfile
+    ports:
+      - "5001:80"
