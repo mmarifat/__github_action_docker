@@ -16,5 +16,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: KengoTODA/actions-setup-docker-compose@main
+      with:
+        version: '1.26.2'
     - run: |
         - npm run docker:push
