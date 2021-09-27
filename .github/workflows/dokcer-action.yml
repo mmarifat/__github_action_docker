@@ -22,5 +22,6 @@ jobs:
         version: '1.26.2'
     # push it to docker hub
     - run: |
-        docker-compose up -d --build --remove-orphans -V && docker commit $(docker ps -a -q --filter ancestor=github-action-demo --format="{{.ID}}") mmarifat/github-action-demo
-        docker login -u mmarifat -p 12345test && docker push mmarifat/github-action-demo
+        docker-compose up -d --build --remove-orphans -V
+        docker commit $(docker ps -a -q --filter ancestor=${{ github.repository.name }} --format="{{.ID}}") ${{secrets.DOCKER_USERNAME}}/${{ github.repository.name }}
+        docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASS}}  && docker push ${{secrets.DOCKER_USERNAME}}/${{ github.repository.name }}
