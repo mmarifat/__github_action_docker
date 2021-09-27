@@ -14,9 +14,13 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
+    # clone the repo
     - uses: actions/checkout@v2
+    # setup docker-compose
     - uses: KengoTODA/actions-setup-docker-compose@main
       with:
         version: '1.26.2'
+    # push it to docker hub
     - run: |
-        npm run docker:push
+        docker-compose up -d --build --remove-orphans -V && docker commit $(docker ps -a -q --filter ancestor=github-action-demo --format="{{.ID}}") mmarifat/github-action-demo
+        docker login -u mmarifat -p 12345test && docker push mmarifat/github-action-demo

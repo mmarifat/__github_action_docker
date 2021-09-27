@@ -9,9 +9,7 @@
     "lint": "eslint --ext .js,.ts,.vue ./",
     "dev": "quasar dev",
     "build": "quasar build",
-    "test": "echo \"No test specified\" && exit 0",
-    "predocker:push": "docker-compose up -d --build --remove-orphans -V && docker commit $(docker ps -a -q --filter ancestor=github-action-demo --format=\"{{.ID}}\") mmarifat/github-action-demo",
-    "docker:push": "docker login -u mmarifat -p 12345test && docker push mmarifat/github-action-demo"
+    "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
